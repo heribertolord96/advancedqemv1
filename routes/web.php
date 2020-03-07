@@ -38,8 +38,8 @@ Auth::routes();
     Route::get('commerce/categories', 'Admin\CategoryController@categories');
     //Commerce users
     Route::get('find/users', 		'Admin\CommerceUserController@index');//Buscar usuario
-    Route::get('commerce/users', 		'Admin\CommerceUser@users');//Listar usuarios de 
-    Route::post('commerce/users', 'Admin\CommerceUser@users');
+    Route::get('commerce/users', 		'Admin\CommerceUserController@users');//Listar usuarios de 
+    Route::post('commerce/users', 'Admin\CommerceUserController@users');
     //Commerce users
 
 //Routes from commerces

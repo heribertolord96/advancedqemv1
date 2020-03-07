@@ -50,25 +50,9 @@
             </form>
         </div>
     </div>
-    <nav class="mt-2">
-   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <my_commerces></my_commerces>  
-    </ul></nav>
+    @include("menu_admin.menu_admin")   
     @endguest
-    <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-    <li @click="menu=8" class="nav-item">
-        <a href="#" class="nav-link">
-           <i class="nav-icon fas fa-home"></i>
-           <p>
-              Inicio
-              <span class="right badge badge-danger"></span>
-           </p>
-        </a>
-     </li>  </ul>
-    </nav>
     <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
-    <!--menuexplorar></menuexplorar-->
     @include("menu_admin.menu_explorar")
 
     <!--si->el usuario es....-->

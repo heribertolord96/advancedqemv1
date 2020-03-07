@@ -52,7 +52,7 @@
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li>{{ $error ??'' }}</li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -62,7 +62,7 @@
                 @endif
                 <!--@@yield('contenido')-->
                 @yield('vue_container')
-                @yield('contenido')
+               <!-- @@include("vue_container/vue_container")-->
                 <br>
 
 

@@ -50,6 +50,7 @@ class DepartmentController extends Controller
         $commerce    = Commerce::where('commerces.slug', $commerce_d)->pluck('id')->first();
         $departments =Department::select('departments.name','departments.body','departments.id as department_id',
         'departments.commerce_id','departments.slug')
+        ->where('departments.commerce_id',$commerce)
         ->paginate(3);
        return [
             'pagination' => [

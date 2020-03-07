@@ -14,26 +14,31 @@ Vue.use(VueAuth, VueAuthOptions);
 
 //Vue.component('appcommerces', require('./components/AppCommercesComponent.vue').default);
 //Vue.component('commercetemplate', require('./layouts/CommerceTemplate.vue').default);
+Vue.component('menuexplorar', require('./layouts/MenuExplorar.vue').default);
 Vue.component('commerces', require('./components/CommercesComponent.vue').default);
 Vue.component('my_commerces', require('./components/myCommerces.vue').default);
 Vue.component('commerce', require('./views/Commerce.vue').default);//view commerce
 Vue.component('products', require('./components/ProductsComponent.vue').default);
-//Vue.component('style1', require('./components/Style1Component.vue').default);
 Vue.component('departments', require('./components/DepartmentsComponent.vue').default);
-Vue.component('home', require('./views/index.vue').default);//vista home
+Vue.component('categories', require('./components/CategoriesComponent.vue').default);
+Vue.component('people', require('./components/PeopleComponent.vue').default);
+//Vue.component('home', require('./views/index.vue').default);//vista home
 
 //Vue.component('login', require('./Auth/login.vue').default);
 //Vue.component('promociones', require('./components/PromotionsComponent.vue').default);
 //Vue.component('eventos', require('./components/EventsComponent.vue').default);
   
-Vue.component('infinite', 	require('vue-infinite-loading'));
+import Vue from 'vue';
+import InfiniteLoading from 'vue-infinite-loading';
+
+Vue.component('infinite-loading', InfiniteLoading);
 import router from './routes'
 
 const app = new Vue({
     el: '#app',
     router,
     data :{
-        menu : 8,
+        menu : 0,
         
        
     },

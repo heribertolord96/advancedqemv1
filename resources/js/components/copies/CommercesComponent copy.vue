@@ -3,8 +3,41 @@
     <template v-if="listado==1">
       <div class="content">
         <div class="panel panel-default-success">
-          <div class="panel-header">
+          <div class="panel-header border-dark">
             <h3 class="card-title">Explorar comercios</h3>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <select class="form-control col-md-3" v-model="criterio">
+                <option value="commerces.all">Descripcion</option>
+                <option value="commerces.nombre">Nombre</option>
+                <option value="commerces.descripcion">Descripcion</option>
+                <option value="commerces.tipo">Tipo de comercio</option>
+                <option value="commerces.location">En...</option>
+                <!--$4moreinfo_go_to_gmybuissiness$$-->
+              </select>
+              <input
+                type="text"
+                v-model="buscar"
+                @keyup.enter="listar_commerces(1,buscar,criterio)"
+                class="form-control"
+                placeholder="Buscar"
+              />
+               <input
+                type="text"
+                class="form-control"
+                placeholder="En..."
+              />
+              <button
+                type="submit"
+                @click="listar_commerces(1,buscar,criterio)"
+                class="btn btn-primary"
+              >
+                <i class="fa fa-search"></i> Buscar
+              </button>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -140,28 +173,83 @@
     <template v-if="listado==0">
       <div class="container">
         <div class="card card-default">
-          <a href="#">
-            <button class="btn-circle warning fa-left" @click="volverCommerces()">Volver a commerces</button>
-          </a>
-          <h4 class="card-title bg-warning">Ver Commerce</h4>
+          <div class="card-header danger with-border">
+            <a href="#">
+              <button
+                class="btn-circle warning fa-left"
+                @click="volverCommerces()"
+              >Volver a commerces</button>
+            </a>
+            <h4 class="card-title bg-warning">Ver Commerce</h4>
+          </div>
           <div class="card-header success with-border">
-            <h2 class="card-title success" v-text="nombre"></h2>
+            <div class="card card-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div
+                class="widget-user-header text-white"
+                style="background: url('/img/photo1.png') center center;"
+              >
+                <h3 class="widget-user-username" v-text="nombre"></h3>
+                <h5 class="widget-user-desc" v-html="descripcion"></h5>
+              </div>
+              <div class="widget-user-image">
+                <img class="img-circle" src="/img/user3-128x128.jpg" alt="User Avatar" />
+              </div>
+            </div>
             <div class="card-tools pull-right">
-              <button type="button" class="btn btn-card-tool" data-widget="collapse">
+              <button type="button" class="btn btn-card-tool btn-danger" data-widget="collapse">
                 <i class="fa fa-minus"></i>
               </button>
             </div>
           </div>
           <div class="card-body">
-            <img class="d-block w-100" height="100" width="150" alt="src-file" />
+            <div class="row">
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">3,200</h5>
+                  <span class="description-text">SALES</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 border-right">
+                <div class="description-block">
+                  <h5 class="description-header">13,000</h5>
+                  <span class="description-text">FOLLOWERS</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">35</h5>
+                  <span class="description-text">PRODUCTS</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">356</h5>
+                  <span class="description-text">Eventos</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4">
+                <div class="description-block">
+                  <h5 class="description-header">35</h5>
+                  <span class="description-text">Promos</span>
+                </div>
+                <!-- /.description-block -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
           </div>
           <div class="card-footer">
-            <strong>
-              <p v-text="descripcion"></p>
-            </strong>
-
-            <table class="table table-bordered">
-              <tbody>
+            <table class="table-bordered table-responsive col-md-12">
+              <tbody class="col-md-auto">
                 <tr>
                   <td>
                     <b>Abrimos a:</b>
@@ -184,8 +272,7 @@
                   <td>
                     <b>Direccion:</b>
                   </td>
-                </tr>
-                <tr>
+
                   <td>
                     <p v-text="calle"></p>
                     <p v-text="numero_exterior"></p>
@@ -201,30 +288,29 @@
         </div>
         <!----------->
         <div class="card card-default">
-          <div class="card-header success">
+          <div class="card-header success border-dark,5">
             <h2>Articulos</h2>
           </div>
           <div class="card body">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
               <tbody>
                 <tr>
                   <th>Departamentos</th>
                   <th>Categorias</th>
+                  <th>Articulos</th>
+                  <th>
+                    <i class="fas fa-user-astronaut"></i> Recursos humanos
+                  </th>
                 </tr>
                 <tr>
                   <td>
                     <div class="form-group">
-                      <div class="btn-group">
-                        <button
-                          class="btn btn-success fas fa-plus-circle"
-                          @click="abrirModalDep('department','registrar')"
-                        >Crear departamento</button>
-
-                        <button
-                          class="btn btn-success fas fa-plus-circle"
-                          @click="abrirModalDep('department','listar')"
-                        >Listar departamentos</button>
-                      </div>
+                      <departments></departments>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                    <categories></categories>
                     </div>
                   </td>
                   <td>
@@ -232,27 +318,39 @@
                       <button
                         type="button"
                         class="btn btn-info"
-                        @click="abrirModalCat('category','registrar')"
-                      >Categorias</button>
+                        @click="abrirModalProd('product','registrar')"
+                      >
+                        <i class="legt fas fa-plus-circle"></i>
+                        Agregar producto
+                      </button>
                       <button
                         type="button"
-                        class="btn btn-success fas fa-plus-circlet"
-                        @click="abrirModalCat('category','listar')"
-                      >Listar categorias</button>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="btn-group">
-                      <button
-                        type="button"
-                        class="btn btn-info"
-                        @click="abrirModalProd('products','registrar')"
-                      >Agregar producto</button>
-                      <button
-                        type="button"
-                        class="btn btn-success fas fa-plus-circlet"
+                        class="btn btn-success"
                         @click="abrirModalProd('product','listar')"
-                      >Listar productos</button>
+                      >
+                        <i class="legt fas fa-list-alt"></i>Listar productos
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-info"
+                        @click="abrirModalUser('user','buscar')"
+                      >
+                        <i class="legt fas fa-plus-circle">
+                          <i class="legt fas fa-plus-user"></i>
+                        </i>
+                        Invitar usuario
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        @click="abrirModalUser('user','listar')"
+                      >
+                        <i class="legt fas fa-list-alt"></i>Listar usuarios
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -331,7 +429,7 @@
           </div>
         </div>
         <div class="card card-default">
-          <div class="card-header success">
+          <div class="card-header success border-dark,5">
             <h2 class="card-title success">Ver catalogo</h2>
             <div class="form-group" style=" display: flex;
     flex-wrap: wrap;
@@ -485,120 +583,6 @@
         </div>
       </div>
 
-      <departments></departments>
-
-      <!--====================================================-->
-
-      <!--Inicio del modalcategoriess agregar/actualizar-->
-      <div
-        v-if="modal==2"
-        class="modal fade"
-        tabindex="-1"
-        :class="{'mostrar' : modal}"
-        role="dialog"
-        aria-labelledby="myModalLabel"
-        style="display: none; overflow-y:auto;"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-primary modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header-SUCCESS">
-              <h4 class="modal-title" v-text="tituloModal"></h4>
-              <button type="button" class="close" @click="cerrarModalCat()" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-                <div class="form-group row">
-                  <label class="form-control-label" for="text-input">Departamento</label>
-
-                  <div class="col-md-9">
-                    <select
-                      class="form-control"
-                      id="department"
-                      @change="department"
-                      v-model="changestate.department"
-                    >
-                      <option value="0" disabled>Seleccione</option>
-                      <option
-                        v-for="department in arrayDepartment"
-                        :key="department.department_id"
-                        :value="department.department_id"
-                        v-text="department.name"
-                      ></option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
-
-                  <div class="col-md-9">
-                    <input
-                      type="text"
-                      v-model="category_name"
-                      class="form-control"
-                      id="category_name"
-                      placeholder="frutas de temporada"
-                    />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-3 form-control-label" for="text-input">Slug</label>
-                  <div class="col-md-9">
-                    <input
-                      type="text"
-                      v-model="category_slug"
-                      class="form-control"
-                      id="category_slug"
-                      placeholder="frutas-de-temporada"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
-                  <div class="col-md-9">
-                    <textarea
-                      required
-                      rows="5"
-                      maxlength="900"
-                      v-model="category_body"
-                      class="form-control"
-                      id="category_body"
-                      placeholder="Ingrese descripción"
-                    ></textarea>
-                  </div>
-                </div>
-
-                <div v-show="errorCategory" class="form-group row div-error">
-                  <div class="text-center text-error bg-danger">
-                    <div v-for="error in errorMostrarMsjCategory" :key="error" v-text="error"></div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="cerrarModalCat()">Cerrar</button>
-              <button
-                type="button"
-                v-if="tipoAccion==3"
-                class="btn btn-success far fa-save"
-                @click="registrarCategory()"
-              >Guardar</button>
-              <button
-                type="button"
-                v-if="tipoAccion==4"
-                class="btn btn-primary"
-                @click="actualizarCategory()"
-              >Actualizar</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!--Fin del modal categories-->
       <!--Inicio del modalproducts agregar/actualizar-->
       <div
         v-if="modal==3"
@@ -756,7 +740,259 @@
         <!-- /.modal-dialog -->
       </div>
       <!--Fin del modal-->
-      <!--=================DepartmentModal=====-->
+
+      <!--Inicio del modal listarproducts -->
+      <div
+        v-if="modal==9"
+        class="modal fade"
+        tabindex="-1"
+        :class="{'mostrar' : modal}"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        style="display: none; overflow-y:auto;"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-primary modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header-SUCCESS">
+              <h4 class="modal-title" v-text="tituloModal"></h4>
+              <button type="button" class="close" @click="cerrarModalprod()" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="overflow-x:auto; border:solid ; min-width:80%">
+                <table class="table table-bordered table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>Opciones</th>
+                      <th>Nombre</th>
+                      <th>Descripcion</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="product in arrayProduct" :key="product.id">
+                      <td>
+                        <button
+                          type="button"
+                          @click="abrirModalProd('product','actualizar',product)"
+                          class="btn btn-warning btn-sm"
+                        >
+                          <i class="icon-pencil"></i>
+                        </button> &nbsp;
+                        <!--
+                               <button type="button" class="btn btn-danger btn-sm" @click="eliminarProduct(product.id)">
+                                 <i class="icon-trash"></i>
+                        </button>&nbsp;-->
+                        <template v-if="product.condicion">
+                          <button
+                            type="button"
+                            class="btn btn-secondary btn-sm"
+                            @click="desactivarProduct(product.id)"
+                          >
+                            <i class="icon-close"></i>
+                          </button>
+                        </template>
+                        <template v-else>
+                          <button
+                            type="button"
+                            class="btn btn-info btn-sm"
+                            @click="activarProduct(product.id)"
+                          >
+                            <i class="icon-check"></i>
+                          </button>
+                        </template>
+                      </td>
+                      <td v-text="product.name"></td>
+                      <td v-text="product.body"></td>
+                      <td>
+                        <div v-if="product.condition">
+                          <span class="badge badge-success">Activo</span>
+                        </div>
+                        <div v-else>
+                          <span class="badge badge-danger">Desactivado</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav>
+                <ul class="pagination">
+                  <li class="page-item" v-if="pagination.current_page > 1">
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)"
+                    >Ant</a>
+                  </li>
+                  <li
+                    class="page-item"
+                    v-for="page in pagesNumber"
+                    :key="page"
+                    :class="[page == isActived ? 'active' : '']"
+                  >
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPagina(page,buscar,criterio)"
+                      v-text="page"
+                    ></a>
+                  </li>
+                  <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)"
+                    >Sig</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="modal-footer row">
+              <button
+                type="button"
+                v-if="tipoAccion==5"
+                class="btn btn-success fas fa-save"
+                @click="registrarProduct()"
+              >Guardar</button>
+              <button
+                type="button"
+                v-if="tipoAccion==6"
+                class="btn btn-success fas fa-save"
+                @click="actualizarProduct()"
+              >Actualizar</button>
+              <button
+                type="button"
+                class="btn btn-success fas fa-close"
+                @click="cerrarModalProd()"
+              >Cerrar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!--Fin del modal-->
+      <!--===========ModalUsers=================-->
+      <!--Inicio del modal listarUsers -->
+      <div
+        v-if="modal==10"
+        class="modal fade"
+        tabindex="-1"
+        :class="{'mostrar' : modal}"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        style="display: none; overflow-y:auto;"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-primary modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header-SUCCESS">
+              <h4 class="modal-title" v-text="tituloModal"></h4>
+              <button type="button" class="close" @click="cerrarModalUser()" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="overflow-x:auto; border:solid ; min-width:80%">
+                <table class="table table-bordered table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>Opciones</th>
+                      <th>Nombre completo</th>
+                      <th>email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="user in arrayUser" :key="user.id">
+                      <td>
+                        <button
+                          type="button"
+                          @click="abrirModalUser('user','role',user)"
+                          class="btn btn-warning btn-sm"
+                        >
+                          <i class="icon-pencil"></i>
+                        </button> &nbsp;
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          @click="eliminarUser(user.id)"
+                        >
+                          <i class="icon-trash"></i>
+                        </button>&nbsp;
+                        <!--template v-if="user.condicion">
+                          <button
+                            type="button"
+                            class="btn btn-secondary btn-sm"
+                            @click="desactivarDepartment(user.id)"
+                          >
+                            <i class="icon-close"></i>
+                          </button>
+                        </template>
+                        <template v-else>
+                          <button
+                            type="button"
+                            class="btn btn-info btn-sm"
+                            @click="activarDepartment(department.id)"
+                          >
+                            <i class="icon-check"></i>
+                          </button>
+                        </template-->
+                      </td>
+                      <td v-text="user.user_name"></td>
+                      <td v-text="user.user_email"></td>
+                      <td v-text="user.user_role"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav>
+                <ul class="pagination">
+                  <li class="page-item" v-if="pagination.current_page > 1">
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaUser(pagination.current_page - 1,buscar,criterio)"
+                    >Ant</a>
+                  </li>
+                  <li
+                    class="page-item"
+                    v-for="page in pagesNumber"
+                    :key="page"
+                    :class="[page == isActived ? 'active' : '']"
+                  >
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaUser(page,buscar,criterio)"
+                      v-text="page"
+                    ></a>
+                  </li>
+                  <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaUser(pagination.current_page + 1,buscar,criterio)"
+                    >Sig</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="modal-footer row">
+              <p class="text-danger">Eliminar usuarios</p>
+              <p class="text-info">cambiar roles</p>
+              <p class="text-success">Gestionar permisos</p>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+      </div>
+      <!--Fin del modal-->
     </template>
 
     <template v-if="listado==4">
@@ -774,19 +1010,29 @@
         <!--categorias-->
       </div>
     </template>
-    <template v-if="listado==7">
-      <div class="card-body">
-        <!--promos-->
-      </div>
-    </template>
   </div>
 </template>
 </div>
 </template>
 
-<script >
+<script>
 //import InfiniteLoading from "vue-infinite-loading";
+
+import Departments from "./DepartmentsComponent.vue";
+import Categories from "./CategoriesComponent.vue";
+import Products from "./ProductsComponent.vue";
+//import Events from "./EventsComponent.vue";
+//import Promotions from "./PromotionsComponent.vue";
+import People from "./PeopleComponent.vue";
+
 export default {
+  extends: Departments,
+  components: {
+    Departments,
+    Categories,
+    Products,
+    People
+  },
   data() {
     return {
       //Commerce data
@@ -836,6 +1082,14 @@ export default {
       errorMostrarMsjProduct: [],
       arrayProduct: [],
       product_id: 0,
+      //users data
+      arrayUser: [],
+      arrayCommerceUser: [],
+      arrayCommerceRole: [],
+      user_id: 0,
+      role_id: 0,
+      //commerce_id:implicit
+      //
       pagination: {
         total: 0,
         current_page: 0,
@@ -930,6 +1184,13 @@ export default {
       //Envia la petición para visualizar la data de esa página
       me.listar_commerces(page, buscar, criterio);
     },
+    cambiarPaginaDepartments(page, buscar, criterio) {
+      abrirModalProd(product, listar);
+      let me = this;
+      //Actualiza la página actual
+      me.pagination.current_page = page;
+      //Envia la petición para visualizar la data de esa página
+    },
     volverCommerces() {
       this.listado = 1;
       me.listar_commerces();
@@ -950,7 +1211,7 @@ export default {
         });
     },
     department() {
-      this.changestate.category = "";
+      this.changestate.category = ""; //Seleccionar categoria
       // set params
       const params = {
         department: this.changestate.department
@@ -970,61 +1231,31 @@ export default {
         category: this.changestate.category
       };
       axios
-        .get("chained/product", { params })
+        .get("chained/product", { params }) //Mostrar productos(como listado)
         .then(response => {
           this.arrayProduct = response.data;
         })
         .catch(error => console.table(error));
     },
-    abrirModalDep(modelo, accion, data = []) {
-      switch (modelo) {
-        case "department":
-          {
-            switch (accion) {
-              case "registrar": {
-                this.modal = 1;
-                this.tipoAccion = 1;
-                this.tituloModal = "Agregar departamento";
-                this.department_name = "";
-                this.department_slug = "";
-                this.department_body = "";
-                this.department_condition = "";
 
-                break;
-              }
-              case "actualizar": {
-                //console.log(data);
-                this.department_id = data["department_id"];
-                this.modal = 1;
-                this.tituloModal = "Editar departamento";
-                this.tipoAccion = 2;
-                this.name = data["name"];
-                this.department_body = data["department_body"];
-                this.department_slug = data["department_slug"];
-                break;
-              }
-            }
-          }
-          break;
-      }
-    },
     abrirModalCat(modelo, accion, data = []) {
       switch (modelo) {
         case "category":
           {
             switch (accion) {
               case "listar": {
-                this.modal = 7;
-
+                this.modal = 8;
+                this.tituloModal = "Listar categorias";
                 //const axios = require("axios");
 
                 let me = this;
-                var url = "/departments/listar";
+                var url = "/commerce/categories";
+                axios.post("commerce_slug");
                 axios
                   .get(url)
                   .then(function(response) {
                     var respuesta = response.data;
-                    me.arrayDepartment = respuesta.departments.data;
+                    me.arrayCategory = respuesta.categories.data;
                     me.pagination = respuesta.pagination;
                     //console.table(response);
                   })
@@ -1066,6 +1297,29 @@ export default {
         case "product":
           {
             switch (accion) {
+              case "listar": {
+                this.modal = 9;
+                this.tituloModal = "Listar productos";
+
+                //const axios = require("axios");
+
+                let me = this;
+                var url = "/commerce/products";
+                axios.post("commerce_slug");
+                axios
+                  .get(url)
+                  .then(function(response) {
+                    var respuesta = response.data;
+                    me.arrayProduct = respuesta.products.data;
+                    me.pagination = respuesta.pagination;
+                    //console.table(response);
+                  })
+                  .catch(function(error) {
+                    console.table(error);
+                  });
+                this.tipoAccion = 3;
+                break;
+              }
               case "registrar": {
                 this.modal = 3;
                 this.department_id = 0;
@@ -1088,6 +1342,84 @@ export default {
                 this.name = data["name"];
                 this.product_body = data["product_body"];
                 this.product_slug = data["product_slug"];
+                break;
+              }
+              case "eliminar": {
+                break;
+              }
+            }
+          }
+          break;
+      }
+    },
+    ////
+    abrirModalUser(modelo, accion, data = []) {
+      switch (modelo) {
+        case "user":
+          {
+            switch (accion) {
+              case "listar": {
+                this.modal = 11;
+                this.tituloModal = "Listar usuarios";
+
+                //const axios = require("axios");
+
+                let me = this;
+                var url = "/commerce/user";
+                axios.post("commerce_slug");
+                axios
+                  .get(url)
+                  .then(function(response) {
+                    var respuesta = response.data;
+                    me.arrayCommerceUser = respuesta.commerceusers.data;
+                    me.pagination = respuesta.pagination;
+                    //console.table(response);
+                  })
+                  .catch(function(error) {
+                    console.table(error);
+                  });
+                this.tipoAccion = 3;
+                break;
+              }
+              case "invitar": {
+                //Guardar
+                //this.modal = 10;
+                this.tituloModal = "Agregar usuarios";
+
+                //const axios = require("axios");
+
+                let me = this;
+                var url = "commerce/users";
+                axios.post("commerce_id");
+                axios.post("role_id");
+                axios.post("user_id");
+                this.commerce_id = 0;
+                this.role_id = 0;
+                this.tituloModal = "Agregar producto";
+                this.commerce_id = 0;
+                this.tipoAccion = 9;
+                break;
+              }
+              case "buscar": {
+                this.modal = 10;
+                this.tituloModal = "Invitar usuarios";
+                let me = this;
+                var url = "find/users";
+                axios
+                  .get(url)
+                  .then(function(response) {
+                    var respuesta = response.data;
+                    me.arrayUser = respuesta.users.data;
+                    me.arrayUser = respuesta.users.data;
+                    me.pagination = respuesta.pagination;
+                    //console.table(response);
+                  })
+                  .catch(function(error) {
+                    console.table(error);
+                  });
+                this.tipoAccion = 3;
+                break;
+
                 break;
               }
               case "eliminar": {
@@ -1137,48 +1469,6 @@ export default {
       }
     },
 
-    registrarDepartment() {
-      if (this.validarDepartment()) {
-        return;
-      }
-      let me = this;
-      axios
-        .post("/department/store", {
-          commerce_id: this.commerce_id,
-          name: this.department_name,
-          body: this.department_body,
-          slug: this.department_slug,
-          condition: 1
-        })
-        .then(function(response) {
-          me.cerrarModalDep();
-        })
-        .catch(function(error) {
-          console.table(error);
-        });
-    },
-    actualizarDepartment() {
-      if (this.validarDepartment()) {
-        return;
-      }
-
-      let me = this;
-
-      axios
-        .put("/department/update", {
-          name: this.department_name,
-          body: this.department_body,
-          slug: this.department_slug,
-          condition: 1,
-          department_id: this.department_id
-        })
-        .then(function(response) {
-          me.cerrarModalDep();
-        })
-        .catch(function(error) {
-          console.table(error);
-        });
-    },
     registrarCategory() {
       if (this.validarCategory()) {
         return;
@@ -1270,13 +1560,7 @@ export default {
           console.table(error);
         });
     },
-    cerrarModalDep() {
-      this.modal = 0;
-      this.department_name = "";
-      this.department_slug = "";
-      this.department_body = "";
-      this.department_condition = "";
-    },
+
     cerrarModalCat() {
       this.modal = 0;
       this.category_departmentid = "";
@@ -1296,20 +1580,10 @@ export default {
       this.product_precio = "";
       this.product_condition = "";
     },
-    validarDepartment() {
-      this.errorDepartment = 0;
-      this.errorMostrarMsjDepartment = [];
-
-      if (!this.department_name)
-        this.errorMostrarMsjDepartment.push(
-          "El campo nombre no puede estar vacío."
-        );
-      if (!this.department_body)
-        this.errorMostrarMsjDepartment.push("Agregue una breve descripcion !");
-      if (this.errorMostrarMsjDepartment.length) this.errorDepartment = 1;
-
-      return this.errorDepartment;
+    cerrarModalUser() {
+      this.modal = 0;
     },
+
     validarCategory() {
       this.errorCategory = 0;
       this.errorMostrarMsjCategory = [];

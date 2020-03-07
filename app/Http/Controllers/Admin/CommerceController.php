@@ -34,7 +34,10 @@ class CommerceController extends Controller
     {
         $this->middleware('auth');
     }
-
+    public function index0()
+    {
+        return Commerce::orderBy('id', 'DESC')->paginate();
+    }
     public function index(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -73,7 +76,7 @@ class CommerceController extends Controller
                     'locations.latitude'
 
                 )
-                ->paginate(3);
+                ->paginate(33);
 
             return [
                 'pagination' => [
@@ -122,7 +125,7 @@ class CommerceController extends Controller
 
                 )
                 ->where($criterio, 'like', '%' . $buscar . '%')
-                ->paginate(3);
+                ->paginate(33);
 
             return [
                 'pagination' => [

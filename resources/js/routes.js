@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import commerces from './components/CommercesComponent'
 Vue.use(Router)
 
 export default new Router({
 	routes: [
 		{
+			path: '/',
+			name: 'home',
+			component: require('./views/Index')
+		},
+		{
 			path: '/commerces',
 			name: 'commerces',
-			component: require('./components/CommercesComponent')
+			component: commerces
 		},
 		{
 			path: ':commerce_slug',
@@ -17,13 +23,25 @@ export default new Router({
 			component: require('./views/Commerce'),//show
 			props: true
 		},
+		/*{
+			path: '/products',
+			name: 'products',
+			component: products
+		},
+		{
+			path: '/promos',
+			name: 'promos',
+			component: promos
+		},
+		{
+			path: '/events',
+			name: 'events',
+			component: events
+		},*/
 		{
 			path: '*',
 			component: require('./views/404')
 		}
 	],
-	mode: 'history',
-	scrollBehavior() {
-		return {x:0, y:0}
-	}
+	mode: 'history'
 })

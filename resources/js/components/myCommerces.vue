@@ -67,8 +67,10 @@
               </p>
             </a>
             <ul class="nav nav-treeview bg-primary" id="menu">
-                         <li> <a href="#">
-                <button @click="abrirModal('commerce','ver',commerce)" type="button" class="btn btn-info far fa-eye">Ver</button>
+                         <li class="nav-item"> <a href="#">                            
+                <button  type="button" class="btn btn-info far fa-eye"><router-link :to="{name: 'commerce', params:{slug: commerce.commerce_slug}}" >
+                  Ver
+                </router-link></button>
               </a></li>
               <li>
                 <button
@@ -81,7 +83,8 @@
               </li>
               
               <li>
-                <button type="button" class="btn btn-success ">                 
+                <button type="button" class="btn btn-success ">       
+                  <people></people>          
                     <i class="fas fa-users-cog"></i> Administrar usuarios</button>
               </li>
             </ul>
@@ -537,7 +540,7 @@ export default {
     },
     infiniteHandler($state) {
       this.page++;
-      let url = "commerces?page=" + this.page;
+      let url = "/my_commerces?page=" + this.page;
       axios
         .get(url)
         .then(response => {

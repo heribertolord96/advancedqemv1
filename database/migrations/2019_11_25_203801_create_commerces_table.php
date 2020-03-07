@@ -18,6 +18,7 @@ class CreateCommercesTable extends Migration
             $table->string('nombre',100)->unique();
             $table->string('slug', 128)->unique();
             $table->text('descripcion',500);
+            $table->text('tipo',200);//Area del negocio
             $table->time('hora_apertura')->nullable();
             $table->time('hora_cierre')->nullable();
             $table->string('num_telefono',100)->nullable();
